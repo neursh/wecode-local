@@ -48,7 +48,7 @@ export default function Credentials() {
         transition={{ duration: 0.25, ease: [0.5, 0.5, 0, 1] }}
       >
         <div className="card-body">
-          <div className="relative flex justify-between items-center mb-4">
+          <div className="relative flex justify-between items-center">
             <div className="flex items-center gap-4">
               {logoLink.value !== '' && (
                 <img
@@ -56,15 +56,8 @@ export default function Credentials() {
                   src={logoLink.value}
                 ></img>
               )}
-              <motion.h2
-                layout
-                className="text-3xl font-bold"
-                transition={{ duration: 0.25, ease: [0.5, 0.5, 0, 1] }}
-              >
-                WeCode
-              </motion.h2>
             </div>
-            <Assist />
+            {sessionStatus.value !== SessionStatus.launching && <Assist />}
           </div>
           {sessionStatus.value === SessionStatus.launching && <Loading />}
           {sessionStatus.value === SessionStatus.signInRequired && <SignIn />}
