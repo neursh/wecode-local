@@ -17,4 +17,6 @@ Beautiful interface with top-tier design. Including dynamic logo stealing techno
 
 Omg realtime update, with clear, intuitive UX design!
 
+I could just keep glazing on and on about this, but I'll leave the rest for you to try it out!
+
 Made with Rust in the back 🫀 so you know it's good.
