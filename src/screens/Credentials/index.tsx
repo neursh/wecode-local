@@ -188,7 +188,7 @@ function SignIn() {
           }
           onClick={() => signin()}
         >
-          {!checking.value && 'Login'}
+          {!checking.value && 'Sign in'}
           {checking.value && (
             <span className="loading loading-spinner loading-sm" />
           )}
