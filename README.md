@@ -12,7 +12,7 @@ A MORE FOCUSED WECODE. Without the annoying slow page load time. This is competi
 Beautiful interface with top-tier design. Including dynamic logo stealing technology, the site's logo will appears next to the text (like this school logo).
 
 <p align="center">
-  <img width="1401" height="880" alt="image" src="https://github.com/user-attachments/assets/85d4cee1-4c16-4593-b0d5-42dc10ddba31" />
+  <img width="1250" height="687" alt="image" src="https://github.com/user-attachments/assets/dce6f2c9-e4ad-41b1-94e7-becb1446c106" />
 </p>
 
 Omg realtime update, with clear, intuitive UX design!
