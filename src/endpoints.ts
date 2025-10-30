@@ -92,7 +92,7 @@ export class WeCodeEndpoints {
     const profile =
       GlobalContext.profiles[GlobalContext.selectedProfile.value].value;
 
-    const checkUrl = new URL(`${profile.server}/assignment/${id}`);
+    const checkUrl = new URL(`${profile.server}/assignment/${id}/0`);
     const result = await fetch(checkUrl.href, {
       danger: { acceptInvalidHostnames: true, acceptInvalidCerts: true },
       redirect: 'manual',
