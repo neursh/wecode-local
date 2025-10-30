@@ -1,10 +1,8 @@
 # WeCode local
 
-The name is rather misleading, it's only a skin over the WeCode server.
+The name is rather misleading, it's only a skin over the WeCode server. I stripped like almost everything, only the assignments feature will receive the most support. Other stuff on the site? idc. So I'll call this a feature.
 
-I stripped like almost everything, only the assignments feature will receive the most support.
-
-Other stuff on the site? idc.
+A more focused WeCode client. Without the annoying slow page load time. This is competitive programming, after all.
 
 ## Preview
 <p align="center">
@@ -13,4 +11,10 @@ Other stuff on the site? idc.
 
 Beautiful interface with top-tier design. Including dynamic logo stealing technology, the site's logo will appears next to the text (like this school logo).
 
-Made with Rust 🫀 so you know it's good.
+<p align="center">
+  <img width="1401" height="880" alt="image" src="https://github.com/user-attachments/assets/85d4cee1-4c16-4593-b0d5-42dc10ddba31" />
+</p>
+
+Omg realtime update, with clear, intuitive UX design!
+
+Made with Rust in the back 🫀 so you know it's good.
