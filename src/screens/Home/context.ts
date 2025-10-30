@@ -59,4 +59,8 @@ export class HomeContext {
       this.assignments.set(parsed);
     });
   }
+
+  static clearStore() {
+    this.assignments.set({});
+  }
 }
