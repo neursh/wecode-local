@@ -2,6 +2,8 @@ import { hookstate, none, State } from '@hookstate/core';
 import { LocalStored, localstored } from '@hookstate/localstored';
 import { nanoid } from 'nanoid';
 import { WeCodeEndpoints } from './endpoints';
+import { CredentialsService } from './screens/Credentials/context';
+import { HomeContext } from './screens/Home/context';
 
 export interface Profile {
   server: string;
@@ -66,5 +68,11 @@ export class GlobalContext {
   static async deleteProfile(id: string) {
     await WeCodeEndpoints.signOut(this.profiles[id].value);
     this.profiles[id].set(none);
+  }
+
+  static exitCurrentProfile() {
+    HomeContext.clearStore();
+    CredentialsService.clearSession();
+    this.selectedProfile.set('');
   }
 }
