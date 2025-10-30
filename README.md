@@ -1,7 +1,7 @@
-# Tauri + React + Typescript
+# WeCode local
 
-This template should help get you started developing with Tauri, React and Typescript in Vite.
+The name is rather misleading, it's only a skin over the WeCode server.
 
-## Recommended IDE Setup
+I stripped like almost everything, only the assignments feature will receive the most support.
 
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+Other stuff on the site? idc.
