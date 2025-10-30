@@ -13,8 +13,7 @@
     "windows": [
       {
         "title": "WeCode",
-        "decorations": false,
-        "width": 800,
+        "width": 1200,
         "height": 600
       }
     ],
