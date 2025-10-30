@@ -120,6 +120,8 @@ function DeleteModal(props: {
                 } catch (err) {
                   console.error(err);
                 }
+                checking.set(false);
+                props.ref.current!.close();
               }
             }}
           >
