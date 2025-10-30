@@ -1,7 +1,7 @@
 import { useHookstate } from '@hookstate/core';
 import { fetch } from '@tauri-apps/plugin-http';
 import { motion } from 'motion/react';
-import { useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useMemo, useRef } from 'react';
 import { GlobalContext } from '../../context';
 import { CredentialsService, SessionStatus, SignInStatus } from './context';
 
@@ -51,16 +51,16 @@ export default function Credentials() {
           <div className="relative flex justify-between items-center">
             <div className="flex items-center gap-4">
               {logoLink.value !== '' && (
-                <img
-                  className="object-contain size-12"
-                  src={logoLink.value}
-                ></img>
+                <img className="object-contain h-12" src={logoLink.value}></img>
               )}
             </div>
             {sessionStatus.value !== SessionStatus.launching && <Assist />}
           </div>
           {sessionStatus.value === SessionStatus.launching && <Loading />}
           {sessionStatus.value === SessionStatus.signInRequired && <SignIn />}
+          {sessionStatus.value === SessionStatus.invalidSession && (
+            <InvalidSession />
+          )}
         </div>
       </motion.div>
     </section>
@@ -75,9 +75,34 @@ function Loading() {
   );
 }
 
-function Assist() {
-  const sessionStatus = useHookstate(CredentialsService.sessionStatus);
+function InvalidSession() {
+  const isLoginAtTheEndIncluded = useMemo(
+    () =>
+      GlobalContext.profiles[
+        GlobalContext.selectedProfile.value
+      ].value.server.endsWith('/login'),
+    []
+  );
 
+  return (
+    <div className="flex flex-col">
+      <p className="text-lg">This WeCode server is unreachable!</p>
+      <p>
+        - If you entered the server address with "/login", or maybe like "/home"
+        at the end, remove it!
+        <br />- Maybe you are not the problem. Blame on the server instead.
+        {isLoginAtTheEndIncluded && (
+          <>
+            <br />- Wait. You DID actually included a cheeky little "/login" at
+            the end there. Cuh, go remove it. Create a new profile or smth.
+          </>
+        )}
+      </p>
+    </div>
+  );
+}
+
+function Assist() {
   return (
     <motion.span
       layout
@@ -88,26 +113,22 @@ function Assist() {
         GlobalContext.selectedProfile.set('');
       }}
     >
-      {sessionStatus.value === SessionStatus.invalidSession ? (
-        'Welcome!'
-      ) : (
-        <div className="flex gap-1 items-center justify-between">
-          Select profile
-          <svg
-            className="size-3 translate-y-px"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="m8.25 4.5 7.5 7.5-7.5 7.5"
-            />
-          </svg>
-        </div>
-      )}
+      <div className="flex gap-1 items-center justify-between">
+        Select profile
+        <svg
+          className="size-3 translate-y-px"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="m8.25 4.5 7.5 7.5-7.5 7.5"
+          />
+        </svg>
+      </div>
     </motion.span>
   );
 }
