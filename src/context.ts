@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid';
 import { WeCodeEndpoints } from './endpoints';
 import { CredentialsService } from './screens/Credentials/context';
 import { HomeContext } from './screens/Home/context';
+import { getCurrentWindow } from '@tauri-apps/api/window';
 
 export interface Profile {
   server: string;
@@ -16,6 +17,7 @@ export interface Profile {
 const urlNormalizer = (input: string) => input.replace(/\/+\//g, () => '/');
 
 export class GlobalContext {
+  static window = getCurrentWindow();
   static selectedProfile = hookstate('');
   static profiles: State<{ [key: string]: Profile }, LocalStored> = hookstate(
     JSON.parse(localStorage.getItem('PROFILES') ?? '{}') as {
