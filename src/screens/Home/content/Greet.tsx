@@ -1,23 +1,39 @@
 import { useMemo } from 'react';
 import { GlobalContext } from '../../../context';
 
+// This is a really important feature. This should only be edited by the owner. >:(
 export default function Greet() {
   const greets = useMemo(
     () => [
       'Good day init?',
       'Good what ever time it is!',
+      'Howdy!',
+      'Ciao!',
+      'Well, look who it is!',
+      'Well, look who come crawling back!',
+      'Xin chào!',
       'Welcome!',
       'Back for more?',
       'Welcome back!',
+      'How’s it going?',
+      'Grab me a snack!',
+      'All roads lead to Rome.',
+      'WeCode Premium',
+      'ICode',
+      'UCode',
+      'MeCode',
+      'Consider touching grass.',
       'Wassup?',
       'Greetings!',
       'Hello there!',
-      ':3', // Super rare
+      '6 7',
+      '/ᐠ_ ꞈ _ᐟ\\',
+      '(⸝⸝⸝О﹏О⸝⸝⸝)',
     ],
     []
   );
   const greetRandom = useMemo(
-    () => greets[Math.floor(Math.random() * (greets.length - 1))],
+    () => greets[Math.ceil(Math.random() * (greets.length - 1))],
     [greets]
   );
 
