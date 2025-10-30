@@ -2,7 +2,3 @@
 @plugin 'daisyui' {
   themes: sunset --default, sunset --prefersdark, cupcake;
 }
-
-*[data-tauri-drag-region] {
-  app-region: drag;
-}
