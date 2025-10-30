@@ -1,8 +1,8 @@
 # WeCode local
 
-The name is rather misleading, it's only a skin over the WeCode server. I stripped like almost everything, only the assignments feature will receive the most support. Other stuff on the site? idc. So I'll call this a feature.
+The name is rather misleading, it's only a skin over the WeCode server. I stripped like almost everything, only the assignments feature will receive the most support. Other stuff on the site? idc. So I'd say this is the selling point-
 
-A more focused WeCode client. Without the annoying slow page load time. This is competitive programming, after all.
+A MORE FOCUSED WECODE. Without the annoying slow page load time. This is competitive programming, after all.
 
 ## Preview
 <p align="center">
