@@ -11,6 +11,7 @@ export interface Assignment {
 }
 
 export class HomeContext {
+  static selectedAssignment = hookstate('');
   static assignments: State<{ [key: string]: Assignment }> = hookstate(
     {} as { [key: string]: Assignment }
   );
@@ -61,6 +62,7 @@ export class HomeContext {
   }
 
   static clearStore() {
+    this.selectedAssignment.set('');
     this.assignments.set({});
   }
 }

@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { GlobalContext } from '../../../context';
+import { GlobalContext } from '../../../../context';
 
 // This is a really important feature. This should only be edited by the owner. >:(
 export default function Greet() {

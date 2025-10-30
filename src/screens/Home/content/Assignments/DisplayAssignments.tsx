@@ -1,6 +1,6 @@
 import { State, useHookstate } from '@hookstate/core';
 import { ReactNode, useLayoutEffect, useRef } from 'react';
-import { Assignment, HomeContext } from '../context';
+import { Assignment, HomeContext } from '../../context';
 import AssginmentItem from './AssignmentItem';
 import Refresh from './Refresh';
 
@@ -60,6 +60,7 @@ function Ongoing(props: { assignments: State<{ [key: string]: Assignment }> }) {
             return (
               <AssginmentItem
                 key={`assign${value[0]}`}
+                id={value[0]}
                 name={value[1].name}
                 notes={value[1].notes}
                 problems={value[1].problems}
@@ -105,6 +106,7 @@ function Finished(props: {
             return (
               <AssginmentItem
                 key={`assign${value[0]}`}
+                id={value[0]}
                 name={value[1].name}
                 problems={value[1].problems}
                 submissions={value[1].submissions}

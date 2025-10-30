@@ -1,6 +1,9 @@
+import { useHookstate } from '@hookstate/core';
 import { useLayoutEffect, useRef } from 'react';
+import { HomeContext } from '../../context';
 
 export default function AssginmentItem(props: {
+  id: string;
   name?: string;
   notes?: string;
   problems?: string;
@@ -8,17 +11,32 @@ export default function AssginmentItem(props: {
   author?: string;
   endDate?: Date;
 }) {
+  const selectedAssignment = useHookstate(HomeContext.selectedAssignment);
+
   return (
-    <div className="card outline outline-[white]/40">
+    <div
+      className={`card outline cursor-pointer ${
+        selectedAssignment.value !== props.id
+          ? 'outline-[white]/40'
+          : 'outline-green-500 outline-2'
+      }`}
+      onClick={() => {
+        selectedAssignment.set(
+          selectedAssignment.value !== props.id ? props.id : ''
+        );
+      }}
+    >
       <div className="w-full card-body flex flex-col justify-between">
         <p className="font-bold text-lg">{props.name}</p>
         <div className="flex flex-wrap justify-end gap-2 pl-8 pt-4">
           {props.notes && (
-            <span className="badge badge-info">{props.notes}</span>
+            <span className="badge badge-info text-nowrap text-ellipsis">
+              {props.notes}
+            </span>
           )}
           {props.problems && (
             <span
-              className="badge badge-success flex items-center gap-1 tooltip"
+              className="badge badge-success flex items-center gap-1 tooltip text-nowrap text-ellipsis"
               data-tip={`${props.submissions} submissions made`}
             >
               <span>
@@ -43,7 +61,7 @@ export default function AssginmentItem(props: {
         <div className="flex flex-wrap justify-end gap-2 pl-8 pr-2">
           {props.endDate && <CountdownTimer endDate={props.endDate} />}
           {props.author && (
-            <span className="flex items-center gap-0.5">
+            <span className="flex items-center gap-0.5 text-nowrap text-ellipsis">
               <span>
                 <svg
                   fill="none"
@@ -113,5 +131,10 @@ function CountdownTimer(props: { endDate: Date }) {
     };
   }, []);
 
-  return <span ref={displayRef} className="badge badge-error font-bold"></span>;
+  return (
+    <span
+      ref={displayRef}
+      className="badge badge-error font-bold text-nowrap text-ellipsis"
+    ></span>
+  );
 }
