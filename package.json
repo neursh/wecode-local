@@ -12,9 +12,11 @@
   "dependencies": {
     "@hookstate/core": "^4.0.2",
     "@hookstate/localstored": "^4.0.2",
+    "@monaco-editor/react": "^4.7.0",
     "@tauri-apps/api": "^2",
     "@tauri-apps/plugin-http": "~2",
     "@tauri-apps/plugin-opener": "^2",
+    "monaco-editor": "^0.54.0",
     "motion": "^12.23.24",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
