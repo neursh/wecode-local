@@ -22,7 +22,6 @@ export default function Greet() {
       'ICode',
       'UCode',
       'MeCode',
-      'Consider touching grass.',
       'Wassup?',
       'Greetings!',
       'Hello there!',
