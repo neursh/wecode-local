@@ -33,6 +33,14 @@ export class GlobalContext {
   }) {
     const id = nanoid();
 
+    const serverCollision = new URL(urlNormalizer(props.server));
+
+    for (const profile of Object.values(this.profiles.value)) {
+      if (new URL(profile.server).host === serverCollision.host) {
+        return false;
+      }
+    }
+
     this.profiles[id].set({
       server: new URL(urlNormalizer(props.server)).href,
       cookie: props.cookie ?? '',
