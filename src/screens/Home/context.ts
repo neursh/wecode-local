@@ -2,12 +2,12 @@ import { hookstate, State } from '@hookstate/core';
 import { WeCodeEndpoints } from '../../endpoints';
 
 export interface Assignment {
-  id: string;
   name: string;
   author: string;
   problems: string;
   submissions: string;
   notes: string;
+  endDate: Date;
 }
 
 export class HomeContext {
@@ -41,13 +41,18 @@ export class HomeContext {
           .split(' sub - ');
         const [problems, notes] = probNotes.split(' prob ');
 
+        const rawEndDate = cells.item(6)?.innerText;
+        if (!rawEndDate) continue;
+
+        const endDate = new Date(rawEndDate);
+
         parsed[id] = {
-          id,
           name,
           author: author.replace(')', ''),
           problems,
           submissions,
           notes,
+          endDate,
         };
       }
 
