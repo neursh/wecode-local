@@ -13,10 +13,6 @@ export class WeCodeEndpoints {
 
     const checkUrl = new URL(`${profile.server}/login`);
     const result = await fetch(checkUrl.href, {
-      headers: {
-        host: checkUrl.host,
-        origin: `https://${checkUrl.host}`,
-      },
       danger: { acceptInvalidHostnames: true, acceptInvalidCerts: true },
       maxRedirections: 0,
     });
@@ -62,9 +58,6 @@ export class WeCodeEndpoints {
     const result = await fetch(loginUrl.href, {
       method: 'POST',
       headers: {
-        host: loginUrl.host,
-        origin: `https://${loginUrl.host}`,
-        referrer: loginUrl.href,
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       danger: { acceptInvalidHostnames: true, acceptInvalidCerts: true },
@@ -84,10 +77,23 @@ export class WeCodeEndpoints {
 
     const checkUrl = new URL(`${profile.server}/assignments`);
     const result = await fetch(checkUrl.href, {
-      headers: {
-        host: checkUrl.host,
-        origin: `https://${checkUrl.host}`,
-      },
+      danger: { acceptInvalidHostnames: true, acceptInvalidCerts: true },
+      redirect: 'manual',
+    });
+
+    await this.updateSession(await result.text(), customParsing);
+    return result;
+  }
+
+  static async getProblems(
+    id: string,
+    customParsing?: (parseDocument?: Document) => Promise<void> | void
+  ) {
+    const profile =
+      GlobalContext.profiles[GlobalContext.selectedProfile.value].value;
+
+    const checkUrl = new URL(`${profile.server}/assignment/${id}`);
+    const result = await fetch(checkUrl.href, {
       danger: { acceptInvalidHostnames: true, acceptInvalidCerts: true },
       redirect: 'manual',
     });
