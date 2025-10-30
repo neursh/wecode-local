@@ -9,9 +9,14 @@ export default function Assignments() {
 
   return (
     <motion.section
-      className="w-1/2 h-full overflow-scroll p-8 outline outline-[white]/40 rounded-2xl"
-      initial={{ width: '100%' }}
-      animate={{ width: selectedAssignment.value !== '' ? '60%' : '100%' }}
+      className="absolute top-4 bottom-4 overflow-scroll p-8 outline outline-[white]/40 rounded-2xl"
+      initial={{ width: 'calc(100% - 32px)' }}
+      animate={{
+        width:
+          selectedAssignment.value !== ''
+            ? 'calc(60% - 40px)'
+            : 'calc(100% - 32px)',
+      }}
       transition={{ ease: [0.25, 0.25, 0.15, 1] }}
     >
       <Greet />
