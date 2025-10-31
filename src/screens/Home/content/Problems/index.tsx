@@ -27,28 +27,35 @@ export default function Problems() {
           selectedAssignment.value === ''
             ? 'calc(100% + 18px)'
             : 'calc(0% + 0px)',
-        height: selectedProblem.value === '' ? '100%' : '50%',
+        height:
+          selectedProblem.value === ''
+            ? 'calc(100% - 32px)'
+            : 'calc(50% - 0px)',
         translateY:
           selectedProblem.value === ''
             ? 'calc(0% - 0px)'
             : !showUp.value
-            ? 'calc(200% - 128px)'
-            : 'calc(100% - 0px)',
+            ? 'calc(200% - 92px)'
+            : 'calc(100% - 33px)',
         width:
-          selectedProblem.value === '' ? 'calc(45% - 8px)' : 'calc(30% - 8px)',
+          selectedProblem.value === '' ? 'calc(45% - 8px)' : 'calc(25% - 8px)',
       }}
       transition={{
         ease: [0.25, 0.25, 0.15, 1],
-        duration: selectedProblem.value === '' ? 0.25 : 0.5,
+        translateY: {
+          type: 'spring',
+          duration: 0.75,
+        },
         width: {
-          duration: selectedProblem.value === '' ? 0.25 : 0.5,
-          delay: selectedProblem.value === '' ? 0 : 0.75,
+          duration: 0.25,
           ease: [0.25, 0.25, 0.15, 1],
         },
       }}
     >
-      <div
+      <motion.div
         className="sticky top-0 backdrop-blur-2xl flex flex-col p-8 outline outline-[white]/40 rounded-2xl z-10"
+        initial={{ padding: '2rem' }}
+        animate={{ padding: selectedProblem.value !== '' ? '1rem' : '2rem' }}
         onClick={() => {
           if (selectedProblem.value) {
             showUp.set((p) => !p);
@@ -56,7 +63,7 @@ export default function Problems() {
         }}
       >
         <div className="flex justify-between gap-2 cursor-pointer">
-          <h1 className="text-3xl font-bold text-nowrap overflow-hidden text-ellipsis">
+          <h1 className="text-xl font-bold text-nowrap overflow-hidden text-ellipsis">
             {assignments[selectedAssignment.value].value?.name}
           </h1>
           <div className="flex flex-wrap gap-2">
@@ -68,14 +75,28 @@ export default function Problems() {
             />
           </div>
         </div>
-        <div className="flex gap-2 pt-2">
-          <span className="badge badge-primary">Sort by status</span>
-          <span className="badge badge-secondary">Refresh</span>
-        </div>
-      </div>
+        {selectedProblem.value !== '' ? (
+          <p className="text-nowrap overflow-hidden text-ellipsis">
+            Problem:{' '}
+            {
+              problems[selectedAssignment.value][selectedProblem.value].value
+                .name
+            }
+          </p>
+        ) : (
+          <div className="flex gap-2 pt-2">
+            <span className="badge badge-primary">Sort by status</span>
+            <span className="badge badge-secondary">Refresh</span>
+          </div>
+        )}
+      </motion.div>
 
       {problems[selectedAssignment.value].value ? (
-        <div className="flex flex-col gap-4 p-8 pt-6">
+        <motion.div
+          className="flex flex-col gap-4 pt-6"
+          initial={{ padding: '2rem' }}
+          animate={{ padding: selectedProblem.value !== '' ? '1rem' : '2rem' }}
+        >
           {Object.entries(problems[selectedAssignment.value].value).map(
             (value) => (
               <div
@@ -96,7 +117,12 @@ export default function Problems() {
                   }
                 }}
               >
-                <div className="card-body flex flex-row justify-between">
+                <div
+                  className="card-body flex flex-row justify-between"
+                  style={{
+                    padding: selectedProblem.value !== '' ? '1rem' : '1.5rem',
+                  }}
+                >
                   <span className="text-lg font-bold">{value[1].name}</span>
                   <span
                     className={`badge ${
@@ -116,7 +142,7 @@ export default function Problems() {
               </div>
             )
           )}
-        </div>
+        </motion.div>
       ) : (
         <div className="flex justify-center items-center pt-12">
           <span className="loading loading-spinner"></span>
