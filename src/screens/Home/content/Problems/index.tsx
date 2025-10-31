@@ -97,8 +97,9 @@ export default function Problems() {
           initial={{ padding: '2rem' }}
           animate={{ padding: selectedProblem.value !== '' ? '1rem' : '2rem' }}
         >
-          {Object.entries(problems[selectedAssignment.value].value).map(
-            (value) => (
+          {Object.entries(problems[selectedAssignment.value].value)
+            .sort((a, b) => a[1].index - b[1].index)
+            .map((value) => (
               <div
                 key={`prob${value[0]}`}
                 className={`card cursor-pointer outline outline-[white]/80 ${
@@ -123,7 +124,12 @@ export default function Problems() {
                     padding: selectedProblem.value !== '' ? '1rem' : '1.5rem',
                   }}
                 >
-                  <span className="text-lg font-bold">{value[1].name}</span>
+                  <div className="flex items-center gap-4">
+                    <span className="w-10 text-2xl font-black">
+                      {value[1].index}
+                    </span>
+                    <span className="text-lg font-bold">{value[1].name}</span>
+                  </div>
                   <span
                     className={`badge ${
                       value[1].status === ProblemStatus.solved
@@ -140,8 +146,7 @@ export default function Problems() {
                   </span>
                 </div>
               </div>
-            )
-          )}
+            ))}
         </motion.div>
       ) : (
         <div className="flex justify-center items-center pt-12">

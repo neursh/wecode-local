@@ -17,6 +17,7 @@ export enum ProblemStatus {
 }
 
 export interface Problem {
+  readonly index: number;
   readonly name: string;
   readonly score: string;
   readonly status: ProblemStatus;
@@ -96,8 +97,8 @@ export class HomeContext {
 
       const parsed: { [key: string]: Problem } = {};
 
-      for (let i = 1; i < problemsRows.length; i++) {
-        const cells = problemsRows[i]?.cells;
+      for (let index = 1; index < problemsRows.length; index++) {
+        const cells = problemsRows[index]?.cells;
         if (!cells) continue;
 
         const id = (
@@ -121,6 +122,7 @@ export class HomeContext {
         }
 
         parsed[id] = {
+          index,
           name,
           score,
           status,
@@ -131,7 +133,7 @@ export class HomeContext {
     });
   }
 
-  static async parseProblemDescription() {
+  static async parseProblemInfo() {
     if (
       this.selectedAssignment.value === '' ||
       this.selectedProblem.value === ''
