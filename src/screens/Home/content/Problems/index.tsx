@@ -30,7 +30,7 @@ export default function Problems() {
         height: selectedProblem.value === '' ? '100%' : '50%',
         translateY:
           selectedProblem.value === ''
-            ? '0%'
+            ? 'calc(0% + 0px)'
             : !showUp.value
             ? 'calc(190% + 8px)'
             : 'calc(100% + 8px)',
@@ -46,14 +46,16 @@ export default function Problems() {
           ease: [0.25, 0.25, 0.15, 1],
         },
       }}
-      onClick={() => {
-        if (selectedProblem.value) {
-          showUp.set((p) => !p);
-        }
-      }}
     >
-      <div className="sticky top-0 backdrop-blur-2xl flex flex-col p-8 outline outline-[white]/40 rounded-2xl z-10">
-        <div className="flex flex-wrap justify-between gap-2">
+      <div
+        className="sticky top-0 backdrop-blur-2xl flex flex-col p-8 outline outline-[white]/40 rounded-2xl z-10"
+        onClick={() => {
+          if (selectedProblem.value) {
+            showUp.set((p) => !p);
+          }
+        }}
+      >
+        <div className="flex flex-wrap justify-between gap-2 cursor-pointer">
           <h1 className="text-3xl font-bold text-nowrap overflow-hidden text-ellipsis">
             {assignments[selectedAssignment.value].value?.name}
           </h1>
