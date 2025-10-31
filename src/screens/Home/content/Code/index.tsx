@@ -1,12 +1,13 @@
 import { useHookstate } from '@hookstate/core';
-import { Editor } from '@monaco-editor/react';
 import { editor } from 'monaco-editor';
 import { motion } from 'motion/react';
-import { useCallback } from 'react';
+import { useCallback, useLayoutEffect, useRef } from 'react';
 import { HomeContext } from '../../context';
 
 export default function Code() {
+  const selectedAssignment = useHookstate(HomeContext.selectedAssignment);
   const selectedProblem = useHookstate(HomeContext.selectedProblem);
+  const problems = useHookstate(HomeContext.problems);
 
   const handleEditorDidMount = useCallback(
     (editor: editor.IStandaloneCodeEditor) => {
@@ -25,6 +26,17 @@ export default function Code() {
     []
   );
 
+  const description = useRef<HTMLIFrameElement>(null);
+
+  useLayoutEffect(() => {
+    HomeContext.parseProblemDescription().then(
+      () =>
+        (description.current!.srcdoc =
+          problems[selectedAssignment.value][selectedProblem.value]?.value
+            ?.rawDescription ?? '')
+    );
+  }, [selectedProblem.value]);
+
   return (
     <motion.section
       className="absolute left-4 top-4 bottom-4 right-4 outline outline-[black]/50 overflow-clip rounded-2xl"
@@ -41,14 +53,19 @@ export default function Code() {
       }}
     >
       <div className="w-full h-full">
-        <Editor
+        <iframe
+          className="w-full h-full bg-black"
+          ref={description}
+          style={{ filter: 'invert(100%)' }}
+        ></iframe>
+        {/* <Editor
           theme="vs-dark"
           onMount={handleEditorDidMount}
           width="100%"
           height="100%"
           defaultLanguage="cpp"
           loading={<span className="loading loading-spinner loading-xs"></span>}
-        />
+        /> */}
       </div>
     </motion.section>
   );
