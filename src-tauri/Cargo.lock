@@ -5035,7 +5035,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "wecode-local"
+name = "wecode-client"
 version = "0.1.0"
 dependencies = [
  "reqwest",

@@ -2553,9 +2553,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wecode-local@workspace:.":
+"wecode-client@workspace:.":
   version: 0.0.0-use.local
-  resolution: "wecode-local@workspace:."
+  resolution: "wecode-client@workspace:."
   dependencies:
     "@hookstate/core": "npm:^4.0.2"
     "@hookstate/localstored": "npm:^4.0.2"
