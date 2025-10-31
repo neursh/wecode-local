@@ -1,8 +1,10 @@
-# WeCode local
+# WeCode client
 
-The name is rather misleading, it's only a skin over the WeCode server. I stripped like almost everything, only the assignments feature will receive the most support. Other stuff on the site? idc. So I'd say this is the selling point-
+The name is NOT LONGER misleading, I stripped like almost everything, only the assignments feature will receive the most support. Other stuff on the site? idc. So I'd say this is the selling point-
 
 A MORE FOCUSED WECODE. Without the annoying slow page load time. This is competitive programming, after all.
+
+This client will only support dark theme. I don't care enough to make light theme.
 
 ## Preview
 <p align="center">
