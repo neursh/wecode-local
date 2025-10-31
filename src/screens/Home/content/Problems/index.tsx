@@ -30,10 +30,10 @@ export default function Problems() {
         height: selectedProblem.value === '' ? '100%' : '50%',
         translateY:
           selectedProblem.value === ''
-            ? 'calc(0% + 0px)'
+            ? 'calc(0% - 0px)'
             : !showUp.value
-            ? 'calc(190% + 8px)'
-            : 'calc(100% + 8px)',
+            ? 'calc(200% - 128px)'
+            : 'calc(100% - 0px)',
         width:
           selectedProblem.value === '' ? 'calc(45% - 8px)' : 'calc(30% - 8px)',
       }}
@@ -55,7 +55,7 @@ export default function Problems() {
           }
         }}
       >
-        <div className="flex flex-wrap justify-between gap-2 cursor-pointer">
+        <div className="flex justify-between gap-2 cursor-pointer">
           <h1 className="text-3xl font-bold text-nowrap overflow-hidden text-ellipsis">
             {assignments[selectedAssignment.value].value?.name}
           </h1>
