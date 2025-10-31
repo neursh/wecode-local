@@ -102,6 +102,26 @@ export class WeCodeEndpoints {
     return result;
   }
 
+  static async getProblemDescription(
+    assignmentId: string,
+    problemId: string,
+    customParsing?: (parseDocument?: Document) => Promise<void> | void
+  ) {
+    const profile =
+      GlobalContext.profiles[GlobalContext.selectedProfile.value].value;
+
+    const checkUrl = new URL(
+      `${profile.server}/assignment/${assignmentId}/${problemId}`
+    );
+    const result = await fetch(checkUrl.href, {
+      danger: { acceptInvalidHostnames: true, acceptInvalidCerts: true },
+      redirect: 'manual',
+    });
+
+    await this.updateSession(await result.text(), customParsing);
+    return result;
+  }
+
   static async updateSession(
     body: string,
     customParsing?: (parseDocument?: Document) => Promise<void> | void

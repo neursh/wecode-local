@@ -2,12 +2,12 @@ import { hookstate } from '@hookstate/core';
 import { WeCodeEndpoints } from '../../endpoints';
 
 export interface Assignment {
-  name: string;
-  author: string;
-  problems: string;
-  submissions: string;
-  notes: string;
-  endDate: Date;
+  readonly name: string;
+  readonly author: string;
+  readonly problems: string;
+  readonly submissions: string;
+  readonly notes: string;
+  readonly endDate: Date;
 }
 
 export enum ProblemStatus {
@@ -17,9 +17,10 @@ export enum ProblemStatus {
 }
 
 export interface Problem {
-  name: string;
-  score: string;
-  status: ProblemStatus;
+  readonly name: string;
+  readonly score: string;
+  readonly status: ProblemStatus;
+  readonly rawDescription?: string;
 }
 
 export class HomeContext {
@@ -81,7 +82,6 @@ export class HomeContext {
 
   static async parseProblems() {
     if (this.selectedAssignment.value === '') return;
-
     const inProcess = this.selectedAssignment.value;
 
     await WeCodeEndpoints.getProblems(inProcess, async (parseDocument) => {
@@ -128,6 +128,32 @@ export class HomeContext {
 
       this.problems[inProcess].set(parsed);
     });
+  }
+
+  static async parseProblemDescription() {
+    if (
+      this.selectedAssignment.value === '' ||
+      this.selectedProblem.value === ''
+    )
+      return;
+    const assignmentId = this.selectedAssignment.value;
+    const problemId = this.selectedProblem.value;
+
+    await WeCodeEndpoints.getProblemDescription(
+      assignmentId,
+      problemId,
+      (parseDocument) => {
+        if (!parseDocument) return;
+
+        const description = parseDocument.getElementById('problem_description');
+
+        if (!description) return;
+
+        this.problems[assignmentId][problemId].rawDescription.set(
+          description.innerHTML
+        );
+      }
+    );
   }
 
   static clearStore() {
