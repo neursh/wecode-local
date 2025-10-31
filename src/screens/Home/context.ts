@@ -147,30 +147,45 @@ export class HomeContext {
         if (!parseDocument) return;
 
         const languages = parseDocument.getElementById('languages');
-        if (!languages) return;
+        if (languages) {
+          const parsedLanguages: { [key: string]: string } = {};
 
-        const parsedLanguages: { [key: string]: string } = {};
-
-        for (const child of languages.children) {
-          if ((child as HTMLOptionElement).value) {
-            parsedLanguages[(child as HTMLOptionElement).value] =
-              child.innerHTML.trim().split(' ')[0].trim();
+          for (const child of languages.children) {
+            if ((child as HTMLOptionElement).value) {
+              parsedLanguages[(child as HTMLOptionElement).value] =
+                child.innerHTML.trim().split(' ')[0].trim();
+            }
           }
+
+          this.problems[assignmentId][problemId].languages.set(parsedLanguages);
         }
 
         const description = parseDocument.getElementById('problem_description');
         if (!description) return;
 
         this.problems[assignmentId][problemId].description.set(
+          // Polyfill the math renderer.
+          // Inject custom styles to work on black theme.
           `
           <head>
-            <link rel="stylesheet" href="/helper/katex.min.css" integrity="sha384-WcoG4HRXMzYzfCgiyfrySxx90XSl2rxY5mnVY5TwtWE6KLrArNKn0T/mOgNL0Mmi" crossorigin="anonymous">
-            <script defer src="/helper/katex.min.js" integrity="sha384-J+9dG2KMoiR9hqcFao0IBLwxt6zpcyN68IgwzsCSkbreXUjmNVRhPFTssqdSGjwQ" crossorigin="anonymous"></script>
-            <script defer src="/helper/auto-render.min.js" integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous"
-              onload="renderMathInElement(document.body);"></script>
+            <link rel="stylesheet" href="/helper/katex.min.css">
+            <script defer src="/helper/katex.min.js"></script>
+            <script defer src="/helper/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
           </head>
           ${description.innerHTML}
           <div style="height: 96px; display: block"></div>
+          <script>
+            document.body.style.padding = "1rem";
+            document.querySelectorAll('*').forEach(el => {
+              el.style.color = 'white';
+              el.style.backgroundColor = '#121c22';
+            });
+            document.querySelectorAll('table, th, td').forEach(el => {
+              el.style.borderColor = 'white';
+              el.style.outlineColor = 'white';
+              el.style.border = '1px solid white';
+            });
+          </script>
           `
         );
       }
