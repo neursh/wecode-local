@@ -23,9 +23,13 @@ export interface Problem {
 }
 
 export class HomeContext {
-  static selectedAssignment = hookstate('');
-  static assignments = hookstate({} as { [key: string]: Assignment });
-  static problemsCache = hookstate({} as { [key: string]: Problem });
+  static readonly selectedAssignment = hookstate('');
+  static readonly assignments = hookstate({} as { [key: string]: Assignment });
+
+  static readonly selectedProblem = hookstate('');
+  static readonly problems = hookstate(
+    {} as { [key: string]: { [key: string]: Problem } }
+  );
 
   static async parseAssignments() {
     await WeCodeEndpoints.getAssignments(async (parseDocument) => {
@@ -77,59 +81,57 @@ export class HomeContext {
 
   static async parseProblems() {
     if (this.selectedAssignment.value === '') return;
-    this.problemsCache.set({});
 
-    await WeCodeEndpoints.getProblems(
-      this.selectedAssignment.value,
-      async (parseDocument) => {
-        if (!parseDocument) return;
+    const inProcess = this.selectedAssignment.value;
 
-        const problemsRows = (
-          parseDocument.getElementsByClassName(
-            'wecode_table table table-bordered'
-          )[0] as HTMLTableElement
-        ).rows;
+    await WeCodeEndpoints.getProblems(inProcess, async (parseDocument) => {
+      if (!parseDocument) return;
 
-        const parsed: { [key: string]: Problem } = {};
+      const problemsRows = (
+        parseDocument.getElementsByClassName(
+          'wecode_table table table-bordered'
+        )[0] as HTMLTableElement
+      ).rows;
 
-        for (let i = 1; i < problemsRows.length; i++) {
-          const cells = problemsRows[i]?.cells;
-          if (!cells) continue;
+      const parsed: { [key: string]: Problem } = {};
 
-          const id = (
-            cells[1]?.children[0] as HTMLAnchorElement | undefined
-          )?.href
-            .split('/')
-            .pop()
-            ?.trim();
-          const name = cells[1]?.innerText.trim();
-          const score = cells[2]?.innerText.trim();
+      for (let i = 1; i < problemsRows.length; i++) {
+        const cells = problemsRows[i]?.cells;
+        if (!cells) continue;
 
-          const rawSolveStatus = cells[2]?.className.trim();
-          const status = !rawSolveStatus
-            ? ProblemStatus.noSubmission
-            : rawSolveStatus.includes('bg-success')
-            ? ProblemStatus.solved
-            : ProblemStatus.failed;
+        const id = (
+          cells[1]?.children[0] as HTMLAnchorElement | undefined
+        )?.href
+          .split('/')
+          .pop()
+          ?.trim();
+        const name = cells[1]?.innerText.trim();
+        const score = cells[2]?.innerText.trim();
 
-          if (!id || !name || !score) {
-            continue;
-          }
+        const rawSolveStatus = cells[2]?.className.trim();
+        const status = !rawSolveStatus
+          ? ProblemStatus.noSubmission
+          : rawSolveStatus.includes('bg-success')
+          ? ProblemStatus.solved
+          : ProblemStatus.failed;
 
-          parsed[id] = {
-            name,
-            score,
-            status,
-          };
+        if (!id || !name || !score) {
+          continue;
         }
 
-        this.problemsCache.set(parsed);
+        parsed[id] = {
+          name,
+          score,
+          status,
+        };
       }
-    );
+
+      this.problems[inProcess].set(parsed);
+    });
   }
 
   static clearStore() {
-    this.problemsCache.set({});
+    this.problems.set({});
     this.selectedAssignment.set('');
     this.assignments.set({});
   }
