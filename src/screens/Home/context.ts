@@ -20,7 +20,8 @@ export interface Problem {
   readonly name: string;
   readonly score: string;
   readonly status: ProblemStatus;
-  readonly rawDescription?: string;
+  readonly description?: string;
+  readonly languages?: { [key: string]: string };
 }
 
 export class HomeContext {
@@ -145,12 +146,32 @@ export class HomeContext {
       (parseDocument) => {
         if (!parseDocument) return;
 
-        const description = parseDocument.getElementById('problem_description');
+        const languages = parseDocument.getElementById('languages');
+        if (!languages) return;
 
+        const parsedLanguages: { [key: string]: string } = {};
+
+        for (const child of languages.children) {
+          if ((child as HTMLOptionElement).value) {
+            parsedLanguages[(child as HTMLOptionElement).value] =
+              child.innerHTML.trim().split(' ')[0].trim();
+          }
+        }
+
+        const description = parseDocument.getElementById('problem_description');
         if (!description) return;
 
-        this.problems[assignmentId][problemId].rawDescription.set(
-          description.innerHTML
+        this.problems[assignmentId][problemId].description.set(
+          `
+          <head>
+            <link rel="stylesheet" href="/helper/katex.min.css" integrity="sha384-WcoG4HRXMzYzfCgiyfrySxx90XSl2rxY5mnVY5TwtWE6KLrArNKn0T/mOgNL0Mmi" crossorigin="anonymous">
+            <script defer src="/helper/katex.min.js" integrity="sha384-J+9dG2KMoiR9hqcFao0IBLwxt6zpcyN68IgwzsCSkbreXUjmNVRhPFTssqdSGjwQ" crossorigin="anonymous"></script>
+            <script defer src="/helper/auto-render.min.js" integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+          </head>
+          ${description.innerHTML}
+          <div style="height: 96px; display: block"></div>
+          `
         );
       }
     );
