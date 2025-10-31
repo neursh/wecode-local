@@ -1,6 +1,7 @@
 import { useHookstate } from '@hookstate/core';
-import { useLayoutEffect, useRef } from 'react';
+import { motion } from 'motion/react';
 import { HomeContext } from '../../context';
+import CountdownTimer from '../CountdownTimer';
 
 export default function AssginmentItem(props: {
   id: string;
@@ -14,11 +15,11 @@ export default function AssginmentItem(props: {
   const selectedAssignment = useHookstate(HomeContext.selectedAssignment);
 
   return (
-    <div
+    <motion.div
       className={`card outline cursor-pointer ${
         selectedAssignment.value !== props.id
           ? 'outline-[white]/40'
-          : 'outline-green-500 outline-2'
+          : 'outline-white outline-4'
       }`}
       onClick={() => {
         selectedAssignment.set(
@@ -82,59 +83,6 @@ export default function AssginmentItem(props: {
           )}
         </div>
       </div>
-    </div>
-  );
-}
-
-function CountdownTimer(props: { endDate: Date }) {
-  const displayRef = useRef<HTMLSpanElement>(null);
-  const intervalRef = useRef(1);
-
-  useLayoutEffect(() => {
-    const updateCountdown = () => {
-      const now = new Date().getTime();
-      const distance = props.endDate.getTime() - now;
-
-      if (distance < 0) {
-        if (displayRef.current) {
-          displayRef.current.innerHTML = "Time's up!";
-        }
-        clearInterval(intervalRef.current);
-        return;
-      }
-
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor(
-        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      const formatted = `${days} day${days !== 1 ? 's' : ''}, ${String(
-        hours
-      ).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(
-        seconds
-      ).padStart(2, '0')} left`;
-
-      if (displayRef.current) {
-        displayRef.current.innerHTML = formatted;
-      }
-    };
-
-    updateCountdown();
-    intervalRef.current = setInterval(updateCountdown, 1000);
-
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-    };
-  }, []);
-
-  return (
-    <span
-      ref={displayRef}
-      className="badge badge-error font-bold text-nowrap text-ellipsis"
-    ></span>
+    </motion.div>
   );
 }
