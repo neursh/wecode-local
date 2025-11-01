@@ -1,6 +1,6 @@
 # WeCode client
 
-The name is NOT LONGER misleading, I stripped like almost everything, only the assignments feature will receive the most support. Other stuff on the site? idc. So I'd say this is the selling point-
+The name is NO LONGER misleading, I stripped like almost everything, only the assignments feature will receive the most support. Other stuff on the site? idc. So I'd say this is the selling point-
 
 A MORE FOCUSED WECODE. Without the annoying slow page load time. This is competitive programming, after all.
 
