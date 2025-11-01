@@ -7,18 +7,10 @@ A MORE FOCUSED WECODE. Without the annoying slow page load time. This is competi
 This client will only support dark theme. I don't care enough to make light theme.
 
 ## Preview
-<p align="center">
-  <img width="812" height="600" alt="image" src="https://github.com/user-attachments/assets/81af0faa-2faa-40dc-b69e-bc98b829085a" />
-</p>
-
-Beautiful interface with top-tier design. Including dynamic logo stealing technology, the site's logo will appears next to the text (like this school logo).
+This is only a development build, the core features (template handling, code submission, languages) are still missing. This is just a show on how it would feels like to use the client.
 
 <p align="center">
-  <img width="1250" height="687" alt="image" src="https://github.com/user-attachments/assets/dce6f2c9-e4ad-41b1-94e7-becb1446c106" />
+  <video src="https://github.com/user-attachments/assets/61d445bd-beba-48d0-b794-7b054a4243e0" />
 </p>
-
-Omg realtime update, with clear, intuitive UX design!
-
-I could just keep glazing on and on about this, but I'll leave the rest for you to try it out!
 
 Made with Rust in the back 🫀 so you know it's good.
